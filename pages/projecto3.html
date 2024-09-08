@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FuturoGastro</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine.js" defer></script>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <header class="fixed w-full bg-gray-800 bg-opacity-80 backdrop-filter backdrop-blur-lg z-50">
+        <nav class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-green-400">FuturoGastro</a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#sobre" class="hover:text-green-400 transition duration-300">Sobre</a>
+                    <a href="#receitas" class="hover:text-green-400 transition duration-300">Receitas</a>
+                    <a href="#gerador" class="hover:text-green-400 transition duration-300">Gerador de Receitas</a>
+                    <a href="#contato" class="hover:text-green-400 transition duration-300">Contato</a>
+                </div>
+                <button class="md:hidden focus:outline-none">
+                    <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Seções anteriores permanecem inalteradas -->
+
+        <section id="gerador" class="py-20 bg-gray-800" x-data="recipeGenerator()">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold mb-8 text-center">Gerador de Receitas Futuristas</h2>
+                <div class="max-w-2xl mx-auto">
+                    <div class="mb-6">
+                        <label for="ingredients" class="block mb-2">Insira seus ingredientes (separados por vírgula):</label>
+                        <input type="text" id="ingredients" x-model="ingredients" class="w-full px-3 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Ex: frango, arroz, cenoura">
+                    </div>
+                    <button @click="generateRecipe" class="w-full bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300 mb-6">Gerar Receita</button>
+                    <div x-show="recipe" class="bg-gray-700 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold mb-4" x-text="recipe.name"></h3>
+                        <div class="mb-4">
+                            <h4 class="text-xl font-semibold mb-2">Ingredientes:</h4>
+                            <ul class="list-disc list-inside">
+                                <template x-for="ingredient in recipe.ingredients">
+                                    <li x-text="ingredient"></li>
+                                </template>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold mb-2">Instruções:</h4>
+                            <ol class="list-decimal list-inside">
+                                <template x-for="step in recipe.instructions">
+                                    <li x-text="step"></li>
+                                </template>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de contato e footer permanecem inalterados -->
+    </main>
+
+    <footer class="bg-gray-800 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2024 FuturoGastro. Todos os direitos reservados.</p>
+            <!-- Footer content remains unchanged -->
+        </div>
+    </footer>
+
+    <script>
+        function recipeGenerator() {
+            return {
+                ingredients: '',
+                recipe: null,
+                generateRecipe() {
+                    const ingredientList = this.ingredients.split(',').map(i => i.trim());
+                    // Simulação de geração de receita (em um cenário real, isso seria feito por uma API)
+                    this.recipe = {
+                        name: `Prato Futurista de ${ingredientList[0].charAt(0).toUpperCase() + ingredientList[0].slice(1)}`,
+                        ingredients: ingredientList.map(i => `${i} molecular`),
+                        instructions: [
+                            `Prepare o ${ingredientList[0]} usando técnicas de cozinha molecular.`,
+                            `Combine com esferas de ${ingredientList[1] || 'sabor surpresa'}.`,
+                            `Adicione espuma de ${ingredientList[2] || 'aroma cítrico'}.`,
+                            'Finalize com uma decoração holográfica comestível.',
+                            'Sirva em um prato levitante para uma experiência gastronômica única.'
+                        ]
+                    };
+                }
+            };
+        }
+    </script>
+</body>
+</html>
